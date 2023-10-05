@@ -1,0 +1,13 @@
+{
+  "name": "Online chat",
+  "env": {
+    "REDIS_ENDPOINT_URL": {
+      "description": "http://localhost:6379/  .",
+      "required": true
+    },
+    "REDIS_PASSWORD": {
+      "description": "A Redis password.",
+      "required": true
+    }
+  }
+}
