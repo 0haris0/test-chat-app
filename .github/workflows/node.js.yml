@@ -3,8 +3,8 @@
 
 name: Node.js CI
 env:
-  REDIS_ENDPOINT_URL: ${{ env.REDIS_ENDPOINT_URL }}
-  REDIS_PASSWORD: ${{ env.REDIS_PASSWORD }}
+  REDIS_ENDPOINT_URL: ${{ REDIS_ENDPOINT_URL }}
+  REDIS_PASSWORD: ${{ REDIS_PASSWORD }}
 on:
   push:
     branches: [ "master" ]
