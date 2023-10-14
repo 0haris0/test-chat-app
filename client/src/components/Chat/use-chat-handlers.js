@@ -40,7 +40,7 @@ const useChatHandlers = (/** @type {import("../../state").UserEntry} */ user) =>
   const onFetchMessages = useCallback(
     (offset = 0, prepend = false) => {
       getMessages(roomId, offset).then(async (messages) => {
-        /** We've got messages but it's possible we might not have the cached user entires which correspond to those messages */
+        /** We've got messages but it's possible we might not have the cached user entire which correspond to those messages */
         await populateUsersFromLoadedMessages(state.users, dispatch, messages);
 
         dispatch({

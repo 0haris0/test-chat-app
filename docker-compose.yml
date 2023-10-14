@@ -1,0 +1,28 @@
+# Specify docker-compose version.
+version: '3.8'
+
+# TODO: Docker file
+
+# Define the services/containers to be run.
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: '.'
+    container_name: 'app'
+    command: npm run dev
+    ports:
+      - '4000:4000'
+    volumes:
+      - './server:/app'
+      - '/usr/src/app/node_modules'
+    environment:
+      REDIS_ENDPOINT_URL: redis
+
+  redis:
+    image: 'redis/redis-stack:latest'
+    container_name: 'redis'
+    ports:
+      - '6379:6379'
+
+

@@ -2,11 +2,11 @@
   "name": "Online chat",
   "env": {
     "REDIS_ENDPOINT_URL": {
-      "description": "http://localhost:6379/  .",
+      "description": "redis-12091.c135.eu-central-1-1.ec2.cloud.redislabs.com:12091",
       "required": true
     },
     "REDIS_PASSWORD": {
-      "description": "A Redis password.",
+      "description": "EeLw+y@6+aPTu44",
       "required": true
     }
   }

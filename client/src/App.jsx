@@ -36,7 +36,6 @@ const App = () => {
           backgroundColor: !showLogin ? "#495057" : undefined,
         }}
       >
-
         {showLogin ? (
             <div>
               {showRegister ? (
