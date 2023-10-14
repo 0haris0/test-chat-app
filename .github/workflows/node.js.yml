@@ -3,8 +3,8 @@
 
 name: Node.js CI
 env:
-  env.REDIS_ENDPOINT_URL: "redis-12091.c135.eu-central-1-1.ec2.cloud.redislabs.com:12091"
-  env.REDIS_PASSWORD: "cSSEkDjzWpMISff6pEEfdz1tsSMVXjS9"
+  REDIS_ENDPOINT_URL: "redis-12091.c135.eu-central-1-1.ec2.cloud.redislabs.com:12091"
+  REDIS_PASSWORD: "cSSEkDjzWpMISff6pEEfdz1tsSMVXjS9"
 on:
   push:
     branches: [ "master" ]
