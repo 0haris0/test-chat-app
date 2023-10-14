@@ -4,7 +4,7 @@
 name: Node.js CI
 env:
   REDIS_ENDPOINT_URL: ${{ secrets.REDIS_ENDPOINT_URL }}
-  REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
+  REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
 on:
   push:
     branches: [ "master" ]
@@ -31,5 +31,4 @@ jobs:
     - run: npm install --only-production
     - run: npm run build --if-present
     - run: npm start
-    - timeout-minutes: 1
 
