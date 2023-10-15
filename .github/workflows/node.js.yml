@@ -29,5 +29,5 @@ jobs:
     - run: npm install --only-production
     - run: cd client
     - run: npm run build --if-present
-    - run: node server/index.js
+    - run: gh-pages -d build
 
