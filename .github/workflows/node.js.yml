@@ -20,7 +20,7 @@ jobs:
     environment: ${{env.REDIS_ENDPOINT_URL}}, ${{env.REDIS_PASSWORD}}
     env:
       REDIS_ENDPOINT_URL: ${{ REDIS_ENDPOINT_URL }}
-      REDIS_PASSWORD: ${{ GITHUB_REDIS_PASSWORD }}
+      REDIS_PASSWORD: ${{ github.REDIS_PASSWORD }}
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
