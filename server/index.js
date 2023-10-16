@@ -100,7 +100,7 @@ const initPubSub = () => {
         await set("total_users", 0);
         await set(`room:${0}:name`, "General");
         /**
-         * Some rooms have pre-defined names. When the clients attempts to fetch a room, an additional lookup
+         * Some rooms have pre-defined names. When the clients attempt to fetch a room, an additional lookup
          * is handled to resolve the name.
          * Rooms with private messages don't have a name
          */
@@ -125,10 +125,6 @@ async function runApp() {
         sessionMiddleware(socket.request, socket.request.res || {}, next);
         // sessionMiddleware(socket.request, socket.request.res, next); will not work with websocket-only
         // connections, as 'socket.request.res' will be undefined in that case
-    });
-
-    app.get("/links", (req, res) => {
-        return res.send("");
     });
 
     io.on("connection", async (socket) => {
@@ -283,10 +279,6 @@ async function runApp() {
         }
     });
 
-    app.post("/room/create", async (req, res) => {
-        const roomId = req.params.roomId;
-    })
-
     /** Fetch messages from a selected room */
     app.get("/room/:id/messages", auth, async (req, res) => {
         const roomId = req.params.id;
@@ -319,12 +311,14 @@ async function runApp() {
     app.get(`/users`, async (req, res) => {
         /** @ts-ignore */
         /** @type {string[]} */ const ids = req.query.ids;
+        console.log(req.query.ids)
         if (typeof ids === "object" && Array.isArray(ids)) {
             /** Need to fetch */
             const users = {};
             for (let x = 0; x < ids.length; x++) {
                 /** @type {string} */
                 const id = ids[x];
+                console.log(id);
                 const user = await hgetall(`user:${id}`);
                 users[id] = {
                     id: id,
@@ -359,17 +353,7 @@ async function runApp() {
         } else {
             return res.status(409).json({message: "Username already taken!"})
         }
-        // user not found
-        return res.status(400).json({message: "Please check did you fill all fields correctly!"});
     });
-    /**
-     * TODO: Limit user rate sending message (prevent spam)
-     */
-
-    /**
-     * TODO: User able to create and join room
-     */
-
     /**
      * Create a public room and add user to it
      */
@@ -389,12 +373,7 @@ async function runApp() {
     });
 
     /**
-     * TODO: Message status
-     */
-
-    /**
      * Get rooms for the selected user.
-     * TODO: Add middleware and protect the other user info.
      */
     app.get(`/rooms/:userId`, auth, async (req, res) => {
         const userId = req.params.userId;

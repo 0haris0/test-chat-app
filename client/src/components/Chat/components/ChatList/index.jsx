@@ -21,7 +21,7 @@ const ChatList = ({rooms, dispatch, user, currentRoom, onLogOut}) => {
 
     return (<>
             <div className="chat-list-container flex-column d-flex pr-4">
-                <div className="py-2 d-inline-flex justify-content-between align-items-center">
+                <div className="py-2 d-md-inline-flex d-sm-block justify-content-between align-items-center">
                     <p className="h5 mb-0 py-1 chats-title">Rooms</p>
                     <div className={`btn btn-outline-info mr-0`}
                          onClick={() => roomCreatorVisibleHandler(!roomCreatorVisible)}>+ Add new room

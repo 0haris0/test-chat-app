@@ -7,7 +7,7 @@ import AvatarImage from "./AvatarImage";
 
 const Footer = ({ user, onLogOut }) => (
   <div
-    className="row no-gutters align-items-center pl-4 pr-2 pb-3"
+      className="row no-gutters align-items-center pl-2 pr-2 mb-3"
     style={{ height: "inherit", flex: 0, minHeight: 50 }}
   >
     {true ? (
@@ -28,7 +28,7 @@ const LogoutButton = ({ onLogOut, col = 5, noinfo = false }) => (
   <div
     onClick={onLogOut}
     style={{ cursor: "pointer" }}
-    className={`col-${col} text-danger ${!noinfo ? "text-right" : ""}`}
+    className={`col-12 col-md-${col} py-2 text-danger  ${!noinfo ? "text-right" : ""}`}
   >
     <Power /> Log out
   </div>
@@ -36,7 +36,7 @@ const LogoutButton = ({ onLogOut, col = 5, noinfo = false }) => (
 
 const UserInfo = ({ user, col = 7, noinfo = false }) => (
   <div
-    className={`col-${col} d-flex align-items-center ${
+      className={`col-12 col-md-${col} d-flex align-items-center ${
       noinfo ? "justify-content-end" : ""
     }`}
   >

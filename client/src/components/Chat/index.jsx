@@ -43,7 +43,7 @@ export default function Chat({ onLogOut, user, onMessageSend }) {
         {/* Chat Box*/}
         <div className="col-8 px-0 flex-column bg-white rounded-lg">
           <div className="px-4 py-4" style={{ borderBottom: "1px solid #eee" }}>
-            <h2 className="font-size-15 mb-0">{room ? room.name : "Room"}</h2>
+            <h5 className=" mb-0">{room ? room.name : "Room"}</h5>
           </div>
           <MessageList
             messageListElement={messageListElement}

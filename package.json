@@ -19,11 +19,14 @@
     "socket.io": "^3.0.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "nodemon server/index.js",
     "start": "node server/index.js"
   },
   "devDependencies": {
     "@types/socket.io": "^2.1.12",
+    "gh-pages": "^6.0.0",
     "nodemon": "^3.0.1"
   }
 }

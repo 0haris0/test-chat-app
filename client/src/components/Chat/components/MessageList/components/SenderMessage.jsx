@@ -11,7 +11,7 @@ const SenderMessage = ({
   onUserClicked,
 }) => (
   <div className="d-flex">
-    <div style={{ width: "50%" }} className="text-left mb-4">
+      <div style={{maxWidth: "50%"}} className="text-left mb-4">
       <div
         className="conversation-list d-inline-block px-3 py-2"
         style={{ borderRadius: 12, backgroundColor: "rgba(85, 110, 230, 0.1)" }}

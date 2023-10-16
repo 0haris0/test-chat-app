@@ -10,7 +10,7 @@ const ReceiverMessage = ({
 }) => (
   <div className="d-flex">
     <div style={{ flex: 1 }} />
-    <div style={{ width: "50%" }} className="text-right mb-4">
+    <div style={{maxWidth: "50%"}} className="text-right mb-4">
       <div
         className="conversation-list d-inline-block bg-light px-3 py-2"
         style={{ borderRadius: 12 }}

@@ -1,8 +1,8 @@
 // @ts-check
 const TypingArea = ({ message, setMessage, onSubmit }) => (
   <div className="p-3 chat-input-section">
-    <form className="row" onSubmit={onSubmit}>
-      <div className="col">
+      <form className="row no-gutters" onSubmit={onSubmit}>
+          <div className="col-9">
         <div className="position-relative">
           <input
             value={message}
@@ -14,10 +14,10 @@ const TypingArea = ({ message, setMessage, onSubmit }) => (
           {/**/}
         </div>
       </div>
-      <div className="col-auto">
+          <div className="col-3">
         <button
           type="submit"
-          className="btn btn-primary btn-rounded chat-send w-md"
+          className="btn btn-primary btn-rounded chat-send float-right"
         >
           <span className="d-none d-sm-inline-block mr-2">Send</span>
           <svg width={13} height={13} viewBox="0 0 24 24" tabIndex={-1}>
