@@ -154,31 +154,28 @@ for (let x = 0; x < roomIds.length; x++) {
 return rooms;
 ```
 
-### Messages
-
-#### Pub/sub
+## Pub/Sub
 
 After initialization, a pub/sub subscription is created: `SUBSCRIBE MESSAGES`. At the same time, each server instance
 will run a listener on a message on this channel to receive real-time updates.
 
-Again, for simplicity, each message is serialized to **_JSON_**, which we parse and then handle in the same manner, as
+Again, for simplicity, each message is serialized to JSON, which we parse and then handle in the same manner, as
 WebSocket messages.
 
 Pub/sub allows connecting multiple servers written in different platforms without taking into consideration the
 implementation detail of each server.
 
-#### How the data is stored:
+### How the data is stored:
 
 - Messages are stored at `room:{roomId}` key in a sorted set (as mentioned above). They are added
   with `ZADD room:{roomId} {timestamp} {message}` command. Message is serialized to an app-specific JSON string.
-  - E.g `ZADD room:0 1617197047 { "From": "2", "Date": 1617197047, "Message": "Hello", "RoomId": "1:2" }`
+  - E.g `ZADD room:0 1617197047 { "From": "2", "Date": 1617197047, "Message": "Hello", "RoomId": "1:2" `
 
-#### How the data is accessed:
+### How the data is accessed:
 
-- **Get list of messages** `ZREVRANGE room:{roomId} {offset_start} {offset_end}`.
+- Get list of messages `ZREVRANGE room:{roomId} {offset_start} {offset_end}`.
   - E.g `ZREVRANGE room:1:2 0 50` will return 50 messages with 0 offsets for the private room between users with IDs 1
     and 2.
-
 #### Code Example: Send Message
 
 ```Javascript
@@ -293,21 +290,3 @@ yarn start
 yarn install
 yarn start
 ```
-
-## Try it out
-
-#### Deploy to Heroku
-
-<p>
-    <a href="https://heroku.com/deploy" target="_blank">
-        <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heorku" />
-    </a>
-</p>
-
-#### Deploy to Google Cloud
-
-<p>
-    <a href="https://deploy.cloud.run" target="_blank">
-        <img src="https://deploy.cloud.run/button.svg" alt="Run on Google Cloud" width="150px"/>
-    </a>
-</p>
