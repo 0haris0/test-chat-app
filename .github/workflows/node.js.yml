@@ -15,7 +15,7 @@ jobs:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    environment: live
+    environment: github-pages
     env:
       REDIS_ENDPOINT_URL: ${{ secrets.REDIS_ENDPOINT_URL}}
       REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
@@ -29,5 +29,5 @@ jobs:
     - run: npm install --only-production
     - run: cd client
     - run: npm run build --if-present
-    - run: gh-pages -d build
+    - run: npm start
 
