@@ -95,6 +95,10 @@ export const addRoom = async (user1, user2) => {
   return axios.post(url(`/room`), { user1, user2 }).then(x => x.data);
 };
 
+export const addPublicRoom = async (user, roomName) => {
+  return axios.post(url(`/room/public-room`), {user, roomName}).then(x => x.data)
+}
+
 /** 
  * @returns {Promise<Array<{ names: string[]; id: string }>>} 
  */

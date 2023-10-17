@@ -32,6 +32,7 @@ const addMessage = async (roomId, fromId, content, timestamp = moment().unix()) 
 
 const createDemoData = async () => {
     /** For each name create a user. */
+
     const users = [];
     for (let x = 0; x < demoUsers.length; x++) {
         const user = await createUser(demoUsers[x], demoPassword);

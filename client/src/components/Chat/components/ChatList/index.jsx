@@ -15,10 +15,6 @@ const ChatList = ({rooms, dispatch, user, currentRoom, onLogOut}) => {
         return [...(main ? main : []), ...other];
     }, [rooms]);
 
-    /*function createNewRoom() {
-        roomsList
-    }*/
-
     return (<>
             <div className="chat-list-container flex-column d-flex pr-4">
                 <div className="py-2 d-md-inline-flex d-sm-block justify-content-between align-items-center">
@@ -28,7 +24,7 @@ const ChatList = ({rooms, dispatch, user, currentRoom, onLogOut}) => {
                     </div>
                 </div>
                 <div className={"py-2 m-2 d-inline-block"}>
-                    {roomCreatorVisible ? <AddRoom visibleRoom={roomCreatorVisible}/> : null}
+                    {roomCreatorVisible ? <AddRoom user={user} visibleRoom={roomCreatorVisible}/> : null}
         </div>
         <div className="messages-box flex flex-1">
             <div className="list-group rounded-0">

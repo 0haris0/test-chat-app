@@ -30,7 +30,8 @@ const {
     createPrivateRoom,
     sanitise,
     getMessages,
-    checkVariableEmpty, createPublicRoom,
+    checkVariableEmpty,
+    createPublicRoom,
 } = require("./utils");
 const {createDemoData} = require("./demo-data");
 const {PORT, SERVER_ID} = require("./config");
@@ -92,19 +93,23 @@ const initPubSub = () => {
     await runRedisAuth();
     /** We store a counter for the total users and increment it on each register */
     const totalUsersKeyExist = await exists("total_users");
+    const totalGlobalRoomKeyExist = await exists("total_global_room");
 
     /** Create demo data with the default users */
-    await createDemoData();
     if (!totalUsersKeyExist) {
         /** This counter is used for the id */
         await set("total_users", 0);
-        await set(`room:${0}:name`, "General");
+        await createDemoData();
+
+        if (!totalGlobalRoomKeyExist) {
+            await set(`room:${0}:name`, "General");
+            await set("total_global_room", 1);
+        }
         /**
          * Some rooms have pre-defined names. When the clients attempt to fetch a room, an additional lookup
          * is handled to resolve the name.
          * Rooms with private messages don't have a name
          */
-
     }
 
     /** Once the app is initialized, run the server */
@@ -338,6 +343,7 @@ async function runApp() {
     /**
      * TODO: User registration
      */
+
     app.post("/register", async (req, res) => {
         const {username, password} = req.body;
         if (checkVariableEmpty(username) || checkVariableEmpty(password)) {
@@ -357,11 +363,11 @@ async function runApp() {
     /**
      * Create a public room and add user to it
      */
-    app.post("/public-room", auth, async (req, res) => {
-        console.log(req.body);
+
+    app.post("/room/public-room", auth, async (req, res) => {
         const {user, roomName} = {
             user: parseInt(req.body.user),
-            roomName: parseInt(req.body.roomName),
+            roomName: req.body.roomName,
         };
 
         const [result, hasError] = await createPublicRoom(user, roomName);
