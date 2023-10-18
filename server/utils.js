@@ -1,7 +1,7 @@
 // @ts-check
 const bcrypt = require('bcrypt');
 const {
-    incr, set, hmset, sadd, hmget, exists, client: redisClient, zadd,
+    incr, set, hmset, sadd, hmget, exists, client: redisClient,
 } = require('./redis');
 
 /** Redis key for the username (for getting the user id) */
@@ -45,10 +45,18 @@ const getPrivateRoomId = (user1, user2) => {
 
 const createPublicRoom = async (user, roomName) => {
     console.log("user:", user, "roomName", roomName);
-    let nextIdRoom = await incr("total_global_rooms");
-    await set(`room`, nextIdRoom);
-    await set(`room:${nextIdRoom}:name`, roomName);
-    await sadd(`user:${user}:rooms`, `${nextIdRoom}`);
+    await sadd(`room:`)
+    /** Add rooms to those users
+     await sadd(`room:${user1}:rooms`, `${roomId}`);
+     await sadd(`user:${user2}:rooms`, `${roomId}`);
+     return [{
+    id: roomId,
+    names: [
+      await hmget(`user:${user1}`, "username"),
+      await hmget(`user:${user2}`, "username"),
+    ],
+  }, false];
+     */
     return [{
         user: user, roomName: roomName
     }]

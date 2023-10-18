@@ -30,8 +30,7 @@ const {
     createPrivateRoom,
     sanitise,
     getMessages,
-    checkVariableEmpty,
-    createPublicRoom,
+    checkVariableEmpty, createPublicRoom,
 } = require("./utils");
 const {createDemoData} = require("./demo-data");
 const {PORT, SERVER_ID} = require("./config");
@@ -93,23 +92,19 @@ const initPubSub = () => {
     await runRedisAuth();
     /** We store a counter for the total users and increment it on each register */
     const totalUsersKeyExist = await exists("total_users");
-    const totalGlobalRoomKeyExist = await exists("total_global_room");
 
-    /** Create demo data with the default users */
+        /** Create demo data with the default users */
+        await createDemoData();
     if (!totalUsersKeyExist) {
         /** This counter is used for the id */
         await set("total_users", 0);
-        await createDemoData();
-
-        if (!totalGlobalRoomKeyExist) {
-            await set(`room:${0}:name`, "General");
-            await set("total_global_room", 1);
-        }
+        await set(`room:${0}:name`, "General");
         /**
-         * Some rooms have pre-defined names. When the clients attempt to fetch a room, an additional lookup
+         * Some rooms have pre-defined names. When the clients attempts to fetch a room, an additional lookup
          * is handled to resolve the name.
          * Rooms with private messages don't have a name
          */
+
     }
 
     /** Once the app is initialized, run the server */
@@ -130,6 +125,10 @@ async function runApp() {
         sessionMiddleware(socket.request, socket.request.res || {}, next);
         // sessionMiddleware(socket.request, socket.request.res, next); will not work with websocket-only
         // connections, as 'socket.request.res' will be undefined in that case
+    });
+
+    app.get("/links", (req, res) => {
+        return res.send("");
     });
 
     io.on("connection", async (socket) => {
@@ -226,7 +225,7 @@ async function runApp() {
     /** Login/register login */
     app.post("/login", async (req, res) => {
         const {username, password} = req.body;
-        if (checkVariableEmpty(username) || checkVariableEmpty(password)) {
+         if (checkVariableEmpty(username) || checkVariableEmpty(password)) {
             return res.status(400).json({message: "Please fill all fields correctly!"})
         }
         const usernameKey = makeUsernameKey(username);
@@ -284,6 +283,10 @@ async function runApp() {
         }
     });
 
+    app.post("/room/create", async (req,res)=>{
+        const roomId = req.params.roomId;
+    })
+
     /** Fetch messages from a selected room */
     app.get("/room/:id/messages", auth, async (req, res) => {
         const roomId = req.params.id;
@@ -316,14 +319,12 @@ async function runApp() {
     app.get(`/users`, async (req, res) => {
         /** @ts-ignore */
         /** @type {string[]} */ const ids = req.query.ids;
-        console.log(req.query.ids)
         if (typeof ids === "object" && Array.isArray(ids)) {
             /** Need to fetch */
             const users = {};
             for (let x = 0; x < ids.length; x++) {
                 /** @type {string} */
                 const id = ids[x];
-                console.log(id);
                 const user = await hgetall(`user:${id}`);
                 users[id] = {
                     id: id,
@@ -343,7 +344,6 @@ async function runApp() {
     /**
      * TODO: User registration
      */
-
     app.post("/register", async (req, res) => {
         const {username, password} = req.body;
         if (checkVariableEmpty(username) || checkVariableEmpty(password)) {
@@ -359,15 +359,25 @@ async function runApp() {
         } else {
             return res.status(409).json({message: "Username already taken!"})
         }
+        // user not found
+        return res.status(400).json({message: "Please check did you fill all fields correctly!"});
     });
+    /**
+     * TODO: Limit user rate sending message (prevent spam)
+     */
+
+    /**
+     * TODO: User able to create and join room
+     */
+
     /**
      * Create a public room and add user to it
      */
-
-    app.post("/room/public-room", auth, async (req, res) => {
+    app.post("/public-room", auth, async (req, res) => {
+        console.log(req.body);
         const {user, roomName} = {
             user: parseInt(req.body.user),
-            roomName: req.body.roomName,
+            roomName: parseInt(req.body.roomName),
         };
 
         const [result, hasError] = await createPublicRoom(user, roomName);
@@ -379,7 +389,12 @@ async function runApp() {
     });
 
     /**
+     * TODO: Message status
+     */
+
+    /**
      * Get rooms for the selected user.
+     * TODO: Add middleware and protect the other user info.
      */
     app.get(`/rooms/:userId`, auth, async (req, res) => {
         const userId = req.params.userId;
