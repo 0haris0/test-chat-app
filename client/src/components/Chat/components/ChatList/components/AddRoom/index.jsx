@@ -6,16 +6,21 @@ import {addPublicRoom, getRooms, getUsers} from "../../../../../../api";
 /**
  * @param {{ active: boolean; room: import('../../../../../../state').Room; onClick: () => void; }} props
  */
-const AddRoom = ({user, dispatch, onClick, rooms}) => {
+const AddRoom = ({user, dispatch, onClick, rooms, roomCreatorVisible, switchVisibility}) => {
     //const { online, name, lastMessage, userId } = useAddRoom(room);
     const [roomName, setRoomName] = useState('');
     const AddRoomSubmit = async (e) => {
         e.preventDefault();
+        switchVisibility(false);
         const newRoom = await addPublicRoom(user.id, roomName);
         //rooms.push = {id:newRoom.id, name: roomName};
         dispatch({
             type: "add room",
             payload: {id: newRoom.id, name: roomName}
+        });
+        dispatch({
+            type: "set current room",
+            payload: newRoom.id
         });
 
     }

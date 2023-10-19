@@ -153,6 +153,7 @@ const useAppHandlers = () => {
         from: user.id,
         date: moment(new Date()).unix(),
       });
+      return false;
     },
     [user, socket]
   );

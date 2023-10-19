@@ -23,7 +23,7 @@ const getGreeting = () => greetings[Math.floor(Math.random() * greetings.length)
 const addMessage = async (roomId, fromId, content, timestamp = moment().unix()) => {
   const roomKey = `room:${roomId}`;
 
-  const message = {
+const message = {
     from: fromId,
     date: timestamp,
     message: content,
