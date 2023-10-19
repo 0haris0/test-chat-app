@@ -18,10 +18,10 @@ const ChatListItem = ({room, active = false, onClick}) => {
         className={`chat-list-item d-md-flex row d-sm-block align-items-start rounded ${active ? "bg-white" : ""}`}
     >
         <div className="align-self-sm-top align-self-center col-1">
-            <OnlineIndicator online={online} hide={room.id === "0"}/>
+            <OnlineIndicator online={online} hide={!isNaN(parseInt(room.id))}/>
         </div>
-        <div className="align-self-center col-2  d-none d-sm-block">
-            <AvatarImage name={name} id={userId}/>
+        <div className="align-self-center col-2  d-none d-sm-block" data-id={room.id}>
+            <AvatarImage name={!isNaN(room.id) ? "General" : name} id={userId}/>
         </div>
         <div className="media-body col-8">
             <h5 className="text-truncate font-size-14 mb-1 font-weight-bolder">{name}</h5>

@@ -62,7 +62,7 @@ const useSocket = (user, dispatch) => {
         updateUser(newUser, dispatch, `${newUser.username} left`)
       );
       socket.on("show.room", (room) => {
-        console.log({ user });
+
         dispatch({
           type: "add room",
           payload: {

@@ -12,7 +12,7 @@ import useChatHandlers from "./use-chat-handlers";
  *  user: import("../../state").UserEntry
  * }} props
  */
-export default function Chat({ onLogOut, user, onMessageSend }) {
+export default function Chat({onLogOut, user, onMessageSend}) {
   const {
     onLoadMoreMessages,
     onUserClicked,
@@ -27,25 +27,25 @@ export default function Chat({ onLogOut, user, onMessageSend }) {
     messages,
     users,
   } = useChatHandlers(user);
-
-  return (
-    <div className="container py-5 px-4">
-      <div className="chat-body row overflow-hidden shadow bg-light rounded">
-        <div className="col-4 px-0">
-          <ChatList
+  let messagePerMin;
+  let spamProtection = false;
+  return (<div className="container py-5 px-4">
+    <div className="chat-body row overflow-hidden shadow bg-light rounded">
+      <div className="col-4 px-0">
+        <ChatList
             user={user}
             onLogOut={onLogOut}
             rooms={rooms}
             currentRoom={currentRoom}
             dispatch={dispatch}
-          />
+        />
+      </div>
+      {/* Chat Box*/}
+      <div className="col-8 px-0 flex-column bg-white rounded-lg">
+        <div className="px-4 py-4" style={{borderBottom: "1px solid #eee"}}>
+          <h5 className=" mb-0">{room ? room.name : "Room"}</h5>
         </div>
-        {/* Chat Box*/}
-        <div className="col-8 px-0 flex-column bg-white rounded-lg">
-          <div className="px-4 py-4" style={{ borderBottom: "1px solid #eee" }}>
-            <h5 className=" mb-0">{room ? room.name : "Room"}</h5>
-          </div>
-          <MessageList
+        <MessageList
             messageListElement={messageListElement}
             messages={messages}
             room={room}
@@ -53,23 +53,21 @@ export default function Chat({ onLogOut, user, onMessageSend }) {
             user={user}
             onUserClicked={onUserClicked}
             users={users}
-          />
+        />
 
-          {/* Typing area */}
-          <TypingArea
+        {/* Typing area */}
+        <TypingArea
             message={message}
             setMessage={setMessage}
+            spamProtect={spamProtection}
             onSubmit={(e) => {
               e.preventDefault();
               onMessageSend(message.trim(), roomId);
               setMessage("");
-
-              messageListElement.current.scrollTop =
-                messageListElement.current.scrollHeight;
+              messageListElement.current.scrollTop = messageListElement.current.scrollHeight;
             }}
-          />
-        </div>
+        />
       </div>
     </div>
-  );
+  </div>);
 }

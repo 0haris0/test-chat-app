@@ -1,17 +1,22 @@
 // @ts-check
 import "./style.css";
 import React, {useState} from "react";
-import {addPublicRoom} from "../../../../../../api";
+import {addPublicRoom, getRooms, getUsers} from "../../../../../../api";
 
 /**
  * @param {{ active: boolean; room: import('../../../../../../state').Room; onClick: () => void; }} props
  */
-const AddRoom = ({user, onClick}) => {
+const AddRoom = ({user, dispatch, onClick, rooms}) => {
     //const { online, name, lastMessage, userId } = useAddRoom(room);
     const [roomName, setRoomName] = useState('');
     const AddRoomSubmit = async (e) => {
         e.preventDefault();
-        return await addPublicRoom(user.id, roomName);
+        const newRoom = await addPublicRoom(user.id, roomName);
+        //rooms.push = {id:newRoom.id, name: roomName};
+        dispatch({
+            type: "add room",
+            payload: {id: newRoom.id, name: roomName}
+        });
 
     }
 

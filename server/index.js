@@ -93,23 +93,22 @@ const initPubSub = () => {
     await runRedisAuth();
     /** We store a counter for the total users and increment it on each register */
     const totalUsersKeyExist = await exists("total_users");
-    const totalGlobalRoomKeyExist = await exists("total_global_room");
+    const totalGlobalRoomKeyExist = await exists("total_global_rooms");
 
     /** Create demo data with the default users */
     if (!totalUsersKeyExist) {
         /** This counter is used for the id */
         await set("total_users", 0);
         await createDemoData();
-
-        if (!totalGlobalRoomKeyExist) {
-            await set(`room:${0}:name`, "General");
-            await set("total_global_room", 1);
-        }
         /**
          * Some rooms have pre-defined names. When the clients attempt to fetch a room, an additional lookup
          * is handled to resolve the name.
          * Rooms with private messages don't have a name
          */
+    }
+    if (!totalGlobalRoomKeyExist) {
+        await set(`room:${0}:name`, "General");
+        await set("total_global_rooms", 1);
     }
 
     /** Once the app is initialized, run the server */
@@ -316,14 +315,12 @@ async function runApp() {
     app.get(`/users`, async (req, res) => {
         /** @ts-ignore */
         /** @type {string[]} */ const ids = req.query.ids;
-        console.log(req.query.ids)
         if (typeof ids === "object" && Array.isArray(ids)) {
             /** Need to fetch */
             const users = {};
             for (let x = 0; x < ids.length; x++) {
                 /** @type {string} */
                 const id = ids[x];
-                console.log(id);
                 const user = await hgetall(`user:${id}`);
                 users[id] = {
                     id: id,

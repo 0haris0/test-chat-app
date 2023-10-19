@@ -1,7 +1,7 @@
 // @ts-check
 const bcrypt = require('bcrypt');
 const {
-    incr, set, hmset, sadd, hmget, exists, client: redisClient, zadd,
+    incr, set, hmset, sadd, hmget, exists, client: redisClient, zadd, get,
 } = require('./redis');
 
 /** Redis key for the username (for getting the user id) */
@@ -49,8 +49,12 @@ const createPublicRoom = async (user, roomName) => {
     await set(`room`, nextIdRoom);
     await set(`room:${nextIdRoom}:name`, roomName);
     await sadd(`user:${user}:rooms`, `${nextIdRoom}`);
+    const totalUsers = await get(`total_users`);
+    for (let i = 0; i < totalUsers; i++) {
+        await sadd(`user:${i}:rooms`, `${nextIdRoom}`);
+    }
     return [{
-        user: user, roomName: roomName
+        id: nextIdRoom, name: roomName, messages: null,
     }]
 };
 

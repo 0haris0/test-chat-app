@@ -9,8 +9,8 @@ const ChatList = ({rooms, dispatch, user, currentRoom, onLogOut}) => {
     const [roomCreatorVisible, roomCreatorVisibleHandler] = useState(false);
     const processedRooms = useMemo(() => {
         const roomsList = Object.values(rooms);
-        const main = roomsList.filter((x) => x.id === "0");
-        let other = roomsList.filter((x) => x.id !== "0");
+        const main = roomsList.filter((x) => !isNaN(x.id));
+        let other = roomsList.filter((x) => isNaN(x.id));
         other = other.sort((a, b) => +a.id.split(":").pop() - +b.id.split(":").pop());
         return [...(main ? main : []), ...other];
     }, [rooms]);
@@ -24,7 +24,8 @@ const ChatList = ({rooms, dispatch, user, currentRoom, onLogOut}) => {
                     </div>
                 </div>
                 <div className={"py-2 m-2 d-inline-block"}>
-                    {roomCreatorVisible ? <AddRoom user={user} visibleRoom={roomCreatorVisible}/> : null}
+                    {roomCreatorVisible ? <AddRoom user={user} dispatch={dispatch} rooms={rooms}
+                                                   visibleRoom={roomCreatorVisible}/> : null}
         </div>
         <div className="messages-box flex flex-1">
             <div className="list-group rounded-0">

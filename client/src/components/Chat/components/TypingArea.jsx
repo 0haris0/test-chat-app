@@ -1,6 +1,7 @@
 // @ts-check
-const TypingArea = ({ message, setMessage, onSubmit }) => (
+const TypingArea = ({message, setMessage, onSubmit, spamProtect}) => (
   <div className="p-3 chat-input-section">
+      {spamProtect ? <div className={"alert alert-danger"}>Spam protection is on!</div> : null}
       <form className="row no-gutters" onSubmit={onSubmit}>
           <div className="col-9">
         <div className="position-relative">
@@ -18,6 +19,7 @@ const TypingArea = ({ message, setMessage, onSubmit }) => (
         <button
           type="submit"
           className="btn btn-primary btn-rounded chat-send float-right"
+          disabled={spamProtect}
         >
           <span className="d-none d-sm-inline-block mr-2">Send</span>
           <svg width={13} height={13} viewBox="0 0 24 24" tabIndex={-1}>
