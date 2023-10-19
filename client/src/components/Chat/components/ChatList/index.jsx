@@ -25,7 +25,7 @@ const ChatList = ({rooms, dispatch, user, currentRoom, onLogOut}) => {
                 </div>
                 <div className={"py-2 m-2 d-inline-block"}>
                     {roomCreatorVisible ? <AddRoom user={user} dispatch={dispatch} rooms={rooms}
-                                                   visibleRoom={roomCreatorVisible}/> : null}
+                                                   visibleRoom={roomCreatorVisible} switchVisibility={roomCreatorVisibleHandler}/> : null}
         </div>
         <div className="messages-box flex flex-1">
             <div className="list-group rounded-0">

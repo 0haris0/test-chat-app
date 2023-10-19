@@ -29,15 +29,15 @@ export const logOut = () => {
   return axios.post(url('/logout'));
 };
 
-/** 
+/**
  * Function for checking which deployment urls exist.
- * 
+ *
  * @returns {Promise<{
  *   heroku?: string;
  *   google_cloud?: string;
  *   vercel?: string;
  *   github?: string;
- * }>} 
+ * }>}
  */
 export const getButtonLinks = () => {
   return axios.get(url('/links'))
@@ -52,10 +52,10 @@ export const getRandomName = () => {
 
 /**
  * Load messages
- * 
+ *
  * @param {string} id room id
- * @param {number} offset 
- * @param {number} size 
+ * @param {number} offset
+ * @param {number} size
  */
 export const getMessages = (id,
   offset = 0,
@@ -77,7 +77,7 @@ export const getPreloadedRoom = async () => {
   return axios.get(url(`/room/0/preload`)).then(x => x.data);
 };
 
-/** 
+/**
  * Fetch users by requested ids
  * @param {Array<number | string>} ids
  */
@@ -99,8 +99,8 @@ export const addPublicRoom = async (user, roomName) => {
   return axios.post(url(`/room/public-room`), {user, roomName}).then(x => x.data)
 }
 
-/** 
- * @returns {Promise<Array<{ names: string[]; id: string }>>} 
+/**
+ * @returns {Promise<Array<{ names: string[]; id: string }>>}
  */
 export const getRooms = async (userId) => {
   return axios.get(url(`/rooms/${userId}`)).then(x => x.data);
