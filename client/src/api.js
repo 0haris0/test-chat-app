@@ -99,8 +99,8 @@ export const addPublicRoom = async (user, roomName) => {
   return axios.post(url(`/room/public-room`), {user, roomName}).then(x => x.data)
 }
 
-/**
- * @returns {Promise<Array<{ names: string[]; id: string }>>}
+/** 
+ * @returns {Promise<Array<{ names: string[]; id: string }>>} 
  */
 export const getRooms = async (userId) => {
   return axios.get(url(`/rooms/${userId}`)).then(x => x.data);
