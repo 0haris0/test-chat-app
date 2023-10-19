@@ -44,7 +44,6 @@ const getPrivateRoomId = (user1, user2) => {
 };
 
 const createPublicRoom = async (user, roomName) => {
-    console.log("user:", user, "roomName", roomName);
     let nextIdRoom = await incr("total_global_rooms");
     await set(`room`, nextIdRoom);
     await set(`room:${nextIdRoom}:name`, roomName);
@@ -82,11 +81,7 @@ const createPrivateRoom = async (user1, user2) => {
 };
 
 const checkVariableEmpty = (stringVar) => {
-    if (stringVar !== '' && stringVar.length < 3) {
-        return true;
-    } else {
-        return false;
-    }
+    return stringVar !== '' && stringVar.length < 3;
 }
 
 const getMessages = async (roomId = "0", offset = 0, size = 50) => {

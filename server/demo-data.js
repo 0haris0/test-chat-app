@@ -25,7 +25,6 @@ const addMessage = async (roomId, fromId, content, timestamp = moment().unix()) 
     const message = {
         from: fromId, date: timestamp, message: content, roomId,
     };
-    console.log(message);
     /** Now the other user sends the greeting to the user */
     await zadd(roomKey, "" + message.date, JSON.stringify(message));
 };

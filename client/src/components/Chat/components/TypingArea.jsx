@@ -1,7 +1,7 @@
 // @ts-check
 const TypingArea = ({message, setMessage, onSubmit, spamProtect}) => (
   <div className="p-3 chat-input-section">
-      {spamProtect ? <div className={"alert alert-danger"}>Spam protection is on!</div> : null}
+      {spamProtect ? <div className={"alert alert-danger"}>Spam protection is on! <br/><small>You need to wait 10 sec. to be able sending messages</small></div> : null}
       <form className="row no-gutters" onSubmit={onSubmit}>
           <div className="col-9">
         <div className="position-relative">
@@ -11,6 +11,7 @@ const TypingArea = ({message, setMessage, onSubmit, spamProtect}) => (
             type="text"
             placeholder="Enter Message..."
             className="form-control chat-input"
+            disabled={spamProtect}
           />
           {/**/}
         </div>
